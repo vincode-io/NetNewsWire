@@ -238,7 +238,11 @@ class MainWindowController : NSWindowController, NSUserInterfaceValidations {
 		timelineViewController?.toggleStarredStatusForSelectedArticles()
 	}
 
-	@IBAction func markAllAsReadAndGoToNextUnread(_ sender: Any?) {
+    @IBAction func toggleFullArticle(_ sender: Any) {
+		NotificationCenter.default.post(name: .FullArticleToggleDidChange, object: self, userInfo: nil)
+    }
+    
+    @IBAction func markAllAsReadAndGoToNextUnread(_ sender: Any?) {
 
 		markAllAsRead(sender)
 		nextUnread(sender)

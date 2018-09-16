@@ -14,7 +14,7 @@
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="656" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <toolbar key="toolbar" implicitIdentifier="3C53153F-2D4C-441B-B551-D28ADBB5869C" explicitIdentifier="MainWindowToolbar" displayMode="iconOnly" sizeMode="regular" id="463-wM-1ZF">
                             <allowedToolbarItems>
@@ -138,6 +138,24 @@
                                         <action selector="toggleStarred:" target="Oky-zY-oP4" id="44J-UK-89l"/>
                                     </connections>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="BD74C9B4-2F76-4726-851B-A1F0CD0CAA24" label="Full Article" paletteLabel="Full Article" toolTip="View Full Article" image="fullArticle" id="oMZ-ff-uOM" userLabel="Full Article" customClass="RSToolbarItem" customModule="RSCore">
+                                    <size key="minSize" width="38" height="25"/>
+                                    <size key="maxSize" width="38" height="27"/>
+                                    <button key="view" verticalHuggingPriority="750" id="2b4-sa-72T">
+                                        <rect key="frame" x="13" y="14" width="38" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="fullArticle" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="ixm-Bv-azn">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="toggleFullArticle:" target="B8D-0N-5wS" id="EWN-sK-mtt"/>
+                                        </connections>
+                                    </button>
+                                    <connections>
+                                        <action selector="toggleStarred:" target="Oky-zY-oP4" id="U7e-ae-A2J"/>
+                                    </connections>
+                                </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="4DED27B7-8961-48F3-A995-9C961E2C0257" label="Open in Browser" paletteLabel="Open in Browser" toolTip="Open in Browser" image="openInBrowser" id="tid-SB-me3" customClass="RSToolbarItem" customModule="RSCore">
                                     <size key="minSize" width="38" height="25"/>
                                     <size key="maxSize" width="38" height="27"/>
@@ -181,6 +199,7 @@
                                 <toolbarItem reference="Gxg-WQ-ufC"/>
                                 <toolbarItem reference="N7D-g2-EPD"/>
                                 <toolbarItem reference="tid-SB-me3"/>
+                                <toolbarItem reference="oMZ-ff-uOM"/>
                                 <toolbarItem reference="nv0-Ju-lP7"/>
                             </defaultToolbarItems>
                             <connections>
@@ -199,7 +218,7 @@
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <customObject id="V3e-nc-6hW" customClass="MainWindowToolbarDelegate" customModule="NetNewsWire" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="-666" y="-124"/>
+            <point key="canvasLocation" x="-638" y="-130"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="vhK-r2-b3N">
@@ -636,6 +655,7 @@
         <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="NSShareTemplate" width="11" height="16"/>
         <image name="action" width="9.5" height="9.5"/>
+        <image name="fullArticle" width="38" height="38"/>
         <image name="markAllRead" width="11" height="9.5"/>
         <image name="markRead" width="9.5" height="9.5"/>
         <image name="newFolder" width="9.5" height="9.5"/>

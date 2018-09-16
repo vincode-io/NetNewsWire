@@ -11,6 +11,7 @@ import WebKit
 import RSCore
 import Articles
 import RSWeb
+import VinContent
 
 final class DetailViewController: NSViewController, WKUIDelegate {
 
@@ -47,7 +48,8 @@ final class DetailViewController: NSViewController, WKUIDelegate {
 	override func viewDidLoad() {
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(timelineSelectionDidChange(_:)), name: .TimelineSelectionDidChange, object: nil)
-		
+		NotificationCenter.default.addObserver(self, selector: #selector(fullArticleToggleDidChange(_:)), name: .FullArticleToggleDidChange, object: nil)
+
 		let preferences = WKPreferences()
 		preferences.minimumFontSize = 12.0
 		preferences.javaScriptCanOpenWindowsAutomatically = false
@@ -112,6 +114,27 @@ final class DetailViewController: NSViewController, WKUIDelegate {
 		
 		let timelineArticles = userInfo[UserInfoKey.articles] as? ArticleArray
 		articles = timelineArticles
+	}
+	
+	@objc func fullArticleToggleDidChange(_ notification: Notification) {
+		
+		guard let stringURL = article?.externalURL == nil ? article?.url : article?.externalURL,
+			let extractURL = URL(string: stringURL) else {
+			return
+		}
+		
+		guard let extractedArticle = try? ContentExtractor.extractArticle(from: extractURL) else {
+			return
+		}
+		
+		guard let currentArticle = article else {
+			return
+		}
+		
+		let newArticle = Article(accountID: currentArticle.accountID, articleID: currentArticle.accountID, feedID: currentArticle.feedID, uniqueID: currentArticle.uniqueID, title: "", contentHTML: extractedArticle.wrappedContent, contentText: currentArticle.contentText, url: currentArticle.url, externalURL: currentArticle.externalURL, summary: currentArticle.summary, imageURL: currentArticle.imageURL, bannerImageURL: currentArticle.bannerImageURL, datePublished: currentArticle.datePublished, dateModified: currentArticle.dateModified, authors: currentArticle.authors, attachments: currentArticle.attachments, status: currentArticle.status)
+		
+		article = newArticle
+		
 	}
 
 	func viewWillStartLiveResize() {
