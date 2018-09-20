@@ -19,3 +19,6 @@
 [submodule "submodules/VinContent"]
 	path = submodules/VinContent
 	url = https://github.com/vincode-io/VinContent.git
+[submodule "submodules/VinXML"]
+	path = submodules/VinXML
+	url = https://github.com/vincode-io/VinXML.git
