@@ -131,7 +131,7 @@ final class DetailViewController: NSViewController, WKUIDelegate {
 			return
 		}
 		
-		let newArticle = Article(accountID: currentArticle.accountID, articleID: currentArticle.accountID, feedID: currentArticle.feedID, uniqueID: currentArticle.uniqueID, title: "", contentHTML: extractedArticle.wrappedContent, contentText: currentArticle.contentText, url: currentArticle.url, externalURL: currentArticle.externalURL, summary: currentArticle.summary, imageURL: currentArticle.imageURL, bannerImageURL: currentArticle.bannerImageURL, datePublished: currentArticle.datePublished, dateModified: currentArticle.dateModified, authors: currentArticle.authors, attachments: currentArticle.attachments, status: currentArticle.status)
+		let newArticle = Article(accountID: currentArticle.accountID, articleID: currentArticle.accountID, feedID: currentArticle.feedID, uniqueID: currentArticle.uniqueID, title: currentArticle.title, contentHTML: extractedArticle.wrappedContent, contentText: currentArticle.contentText, url: currentArticle.url, externalURL: currentArticle.externalURL, summary: currentArticle.summary, imageURL: currentArticle.imageURL, bannerImageURL: currentArticle.bannerImageURL, datePublished: currentArticle.datePublished, dateModified: currentArticle.dateModified, authors: currentArticle.authors, attachments: currentArticle.attachments, status: currentArticle.status)
 		
 		article = newArticle
 		
