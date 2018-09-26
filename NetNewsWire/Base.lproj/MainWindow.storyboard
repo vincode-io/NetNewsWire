@@ -153,7 +153,7 @@
                                         </connections>
                                     </button>
                                     <connections>
-                                        <action selector="toggleStarred:" target="Oky-zY-oP4" id="U7e-ae-A2J"/>
+                                        <action selector="toggleFullArticle:" target="B8D-0N-5wS" id="vrf-4m-KwY"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="4DED27B7-8961-48F3-A995-9C961E2C0257" label="Open in Browser" paletteLabel="Open in Browser" toolTip="Open in Browser" image="openInBrowser" id="tid-SB-me3" customClass="RSToolbarItem" customModule="RSCore">
