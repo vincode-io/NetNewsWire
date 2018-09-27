@@ -17,6 +17,8 @@ class TimelineViewController: NSViewController, UndoableCommandRunner {
 	@IBOutlet var contextualMenuDelegate: TimelineContextualMenuDelegate?
 	@IBOutlet var dataSource: TimelineDataSource!
 
+	var sharingServiceDelegate: NSSharingServiceDelegate?
+	
 	var selectedArticles: [Article] {
 		return Array(articles.articlesForIndexes(tableView.selectedRowIndexes))
 	}
@@ -30,12 +32,14 @@ class TimelineViewController: NSViewController, UndoableCommandRunner {
 			if articles != oldValue {
 				dataSource.articles = articles
 				updateShowAvatars()
+				articleRowMap = [String: Int]()
 				tableView.reloadData()
 			}
 		}
 	}
 
 	var undoableCommands = [UndoableCommand]()
+	private var articleRowMap = [String: Int]() // articleID: rowIndex
 	private var cellAppearance: TimelineCellAppearance!
 	private var cellAppearanceWithAvatar: TimelineCellAppearance!
 	private var showFeedNames = false {
@@ -127,6 +131,10 @@ class TimelineViewController: NSViewController, UndoableCommandRunner {
 
 				didRegisterForNotifications = true
 		}
+	}
+	
+	override func viewDidAppear() {
+		sharingServiceDelegate = SharingServiceDelegate(self.view.window)
 	}
 
 	// MARK: Appearance Change
@@ -359,7 +367,7 @@ class TimelineViewController: NSViewController, UndoableCommandRunner {
 		guard let articles = note.userInfo?[Account.UserInfoKey.articles] as? Set<Article> else {
 			return
 		}
-		reloadCellsForArticleIDs(articles.articleIDs())
+		reloadVisibleCells(for: articles)
 	}
 
 	@objc func feedIconDidBecomeAvailable(_ note: Notification) {
@@ -367,10 +375,15 @@ class TimelineViewController: NSViewController, UndoableCommandRunner {
 		guard let feed = note.userInfo?[UserInfoKey.feed] as? Feed else {
 			return
 		}
-		let articlesToReload = articles.filter { (article) -> Bool in
+		let indexesToReload = tableView.indexesOfAvailableRowsPassingTest { (row) -> Bool in
+			guard let article = articles.articleAtRow(row) else {
+				return false
+			}
 			return feed == article.feed
 		}
-		reloadCellsForArticles(articlesToReload)
+		if let indexesToReload = indexesToReload {
+			reloadCells(for: indexesToReload)
+		}
 	}
 
 	@objc func avatarDidBecomeAvailable(_ note: Notification) {
@@ -430,22 +443,32 @@ class TimelineViewController: NSViewController, UndoableCommandRunner {
 		return nil
 	}
 	
-	private func reloadCellsForArticles(_ articles: [Article]) {
-		
-		reloadCellsForArticleIDs(Set(articles.articleIDs()))
+	private func reloadVisibleCells(for articles: [Article]) {
+		reloadVisibleCells(for: Set(articles.articleIDs()))
+	}
+
+	private func reloadVisibleCells(for articles: Set<Article>) {
+		reloadVisibleCells(for: articles.articleIDs())
 	}
 	
-	private func reloadCellsForArticleIDs(_ articleIDs: Set<String>) {
-
+	private func reloadVisibleCells(for articleIDs: Set<String>) {
 		if articleIDs.isEmpty {
 			return
 		}
-		let indexes = articles.indexesForArticleIDs(articleIDs)
-		reloadCells(for: indexes)
+		let indexes = indexesForArticleIDs(articleIDs)
+		reloadVisibleCells(for: indexes)
+	}
+
+	private func reloadVisibleCells(for indexes: IndexSet) {
+		let indexesToReload = tableView.indexesOfAvailableRowsPassingTest { (row) -> Bool in
+			return indexes.contains(row)
+		}
+		if let indexesToReload = indexesToReload {
+			reloadCells(for: indexesToReload)
+		}
 	}
 
 	private func reloadCells(for indexes: IndexSet) {
-
 		if indexes.isEmpty {
 			return
 		}
@@ -695,7 +718,48 @@ private extension TimelineViewController {
 		block()
 		restoreSelection(savedSelection)
 	}
-	
+
+	func row(for articleID: String) -> Int? {
+		updateArticleRowMapIfNeeded()
+		return articleRowMap[articleID]
+	}
+
+	func row(for article: Article) -> Int? {
+		return row(for: article.articleID)
+	}
+
+	func updateArticleRowMap() {
+		var rowMap = [String: Int]()
+		var index = 0
+		articles.forEach { (article) in
+			rowMap[article.articleID] = index
+			index += 1
+		}
+		articleRowMap = rowMap
+	}
+
+	func updateArticleRowMapIfNeeded() {
+		if articleRowMap.isEmpty {
+			updateArticleRowMap()
+		}
+	}
+
+	func indexesForArticleIDs(_ articleIDs: Set<String>) -> IndexSet {
+
+		var indexes = IndexSet()
+
+		articleIDs.forEach { (articleID) in
+			guard let oneIndex = row(for: articleID) else {
+				return
+			}
+			if oneIndex != NSNotFound {
+				indexes.insert(oneIndex)
+			}
+		}
+
+		return indexes
+	}
+
 	// MARK: Fetching Articles
 
 	func fetchArticles() {
@@ -733,7 +797,7 @@ private extension TimelineViewController {
 
 	func selectArticles(_ articleIDs: [String]) {
 
-		let indexesToSelect = articles.indexesForArticleIDs(Set(articleIDs))
+		let indexesToSelect = indexesForArticleIDs(Set(articleIDs))
 		if indexesToSelect.isEmpty {
 			tableView.deselectAll(self)
 			return

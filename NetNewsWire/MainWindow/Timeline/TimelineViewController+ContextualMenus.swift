@@ -71,6 +71,19 @@ extension TimelineViewController {
 		markArticles(articles, starred: false)
 	}
 
+	@objc func selectFeedInSidebarFromContextualMenu(_ sender: Any?) {
+		
+		guard let menuItem = sender as? NSMenuItem, let feed = menuItem.representedObject as? Feed else {
+			return
+		}
+		
+		var userInfo = UserInfoDictionary()
+		userInfo[UserInfoKey.feed] = feed
+		
+		NotificationCenter.default.post(name: .UserDidRequestSidebarSelection, object: self, userInfo: userInfo)
+		
+	}
+	
 	@objc func openInBrowserFromContextualMenu(_ sender: Any?) {
 
 		guard let menuItem = sender as? NSMenuItem, let urlString = menuItem.representedObject as? String else {
@@ -145,9 +158,15 @@ private extension TimelineViewController {
 		if articles.count > 0 {
 			menu.addItem(markOlderReadMenuItem(articles))
 		}
-		menu.addSeparatorIfNeeded()
 
+		menu.addSeparatorIfNeeded()
+		
+		if articles.count == 1, let feed = articles.first!.feed {
+			menu.addItem(selectFeedInSidebar(feed))
+		}
+		
 		if articles.count == 1, let link = articles.first!.preferredLink {
+			menu.addSeparatorIfNeeded()
 			menu.addItem(openInBrowserMenuItem(link))
 		}
 
@@ -166,7 +185,8 @@ private extension TimelineViewController {
 			return nil
 		}
 
-		let items = articles.map { ArticlePasteboardWriter(article: $0) }
+		let sortedArticles = selectedArticles.sortedByDate(.orderedAscending)
+		let items = sortedArticles.map { ArticlePasteboardWriter(article: $0) }
 		let standardServices = NSSharingService.sharingServices(forItems: items)
 		let customServices = SharingServicePickerDelegate.customSharingServices(for: items)
 		let services = standardServices + customServices
@@ -176,6 +196,7 @@ private extension TimelineViewController {
 
 		let menu = NSMenu(title: NSLocalizedString("Share", comment: "Share menu name"))
 		services.forEach { (service) in
+			service.delegate = sharingServiceDelegate
 			let menuItem = NSMenuItem(title: service.menuItemTitle, action: #selector(performShareServiceFromContextualMenu(_:)), keyEquivalent: "")
 			menuItem.image = service.image
 			let sharingCommandInfo = SharingCommandInfo(service: service, items: items)
@@ -208,6 +229,11 @@ private extension TimelineViewController {
 
 	func markOlderReadMenuItem(_ articles: [Article]) -> NSMenuItem {
 		return menuItem(NSLocalizedString("Mark Older as Read", comment: "Command"),  #selector(markOlderArticlesReadFromContextualMenu(_:)), articles)
+	}
+
+	func selectFeedInSidebar(_ feed: Feed) -> NSMenuItem {
+		let menuText = "Select “\(feed.nameForDisplay)” in Sidebar"
+		return menuItem(NSLocalizedString(menuText, comment: "Command"), #selector(selectFeedInSidebarFromContextualMenu(_:)), feed)
 	}
 
 	func openInBrowserMenuItem(_ urlString: String) -> NSMenuItem {
