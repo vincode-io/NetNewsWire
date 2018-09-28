@@ -17,6 +17,7 @@ final class DetailViewController: NSViewController, WKUIDelegate {
 
 	@IBOutlet var containerView: DetailContainerView!
 
+	var contentExtractor: ContentExtractor?
 	var webview: DetailWebView!
 
 	var articles: [Article]? {
@@ -118,23 +119,12 @@ final class DetailViewController: NSViewController, WKUIDelegate {
 	
 	@objc func fullArticleToggleDidChange(_ notification: Notification) {
 		
-		guard let stringURL = article?.externalURL == nil ? article?.url : article?.externalURL,
-			let extractURL = URL(string: stringURL) else {
+		guard let link = article?.preferredLink, let url = URL(string: link) else {
 			return
 		}
-		
-		guard let extractedArticle = try? ContentExtractor.extractArticle(from: extractURL) else {
-			return
-		}
-		
-		guard let currentArticle = article else {
-			return
-		}
-		
-		let newArticle = Article(accountID: currentArticle.accountID, articleID: currentArticle.accountID, feedID: currentArticle.feedID, uniqueID: currentArticle.uniqueID, title: currentArticle.title, contentHTML: extractedArticle.wrappedContent, contentText: currentArticle.contentText, url: currentArticle.url, externalURL: currentArticle.externalURL, summary: currentArticle.summary, imageURL: currentArticle.imageURL, bannerImageURL: currentArticle.bannerImageURL, datePublished: currentArticle.datePublished, dateModified: currentArticle.dateModified, authors: currentArticle.authors, attachments: currentArticle.attachments, status: currentArticle.status)
-		
-		article = newArticle
-		
+		contentExtractor = ContentExtractor(url)
+		contentExtractor?.delegate = self
+		contentExtractor?.process()
 	}
 
 	func viewWillStartLiveResize() {
@@ -203,6 +193,24 @@ extension DetailViewController: WKScriptMessageHandler {
 
 		NotificationCenter.default.post(name: .MouseDidExitLink, object: self, userInfo: userInfo)
 	}
+}
+
+extension DetailViewController: ContentExtractorDelegate {
+	
+	func processDidFail(with error: Error) {
+		print("Error in ContentExtractor: \(error)")
+	}
+	
+	func processDidComplete(article: ExtractedArticle) {
+		
+		guard let currentArticle = self.article else { return }
+		
+		let newArticle = Article(accountID: currentArticle.accountID, articleID: currentArticle.accountID, feedID: currentArticle.feedID, uniqueID: currentArticle.uniqueID, title: currentArticle.title, contentHTML: article.wrappedContent, contentText: currentArticle.contentText, url: currentArticle.url, externalURL: currentArticle.externalURL, summary: currentArticle.summary, imageURL: currentArticle.imageURL, bannerImageURL: currentArticle.bannerImageURL, datePublished: currentArticle.datePublished, dateModified: currentArticle.dateModified, authors: currentArticle.authors, attachments: currentArticle.attachments, status: currentArticle.status)
+		
+		self.article = newArticle
+
+	}
+	
 }
 
 // MARK: - Private
