@@ -141,7 +141,7 @@
                                 <toolbarItem implicitItemIdentifier="BD74C9B4-2F76-4726-851B-A1F0CD0CAA24" label="Full Article" paletteLabel="Full Article" toolTip="View Full Article" image="fullArticle" id="oMZ-ff-uOM" userLabel="Full Article" customClass="RSToolbarItem" customModule="RSCore">
                                     <size key="minSize" width="38" height="25"/>
                                     <size key="maxSize" width="38" height="27"/>
-                                    <button key="view" verticalHuggingPriority="750" id="2b4-sa-72T">
+                                    <button key="view" verticalHuggingPriority="750" id="2b4-sa-72T" customClass="RSDarkModeAdaptingToolbarButton" customModule="RSCore">
                                         <rect key="frame" x="13" y="14" width="38" height="25"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="fullArticle" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" inset="2" id="ixm-Bv-azn">
@@ -654,13 +654,13 @@
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="NSShareTemplate" width="11" height="16"/>
-        <image name="action" width="9.5" height="9.5"/>
-        <image name="fullArticle" width="38" height="38"/>
-        <image name="markAllRead" width="11" height="9.5"/>
-        <image name="markRead" width="9.5" height="9.5"/>
-        <image name="newFolder" width="9.5" height="9.5"/>
-        <image name="nextUnread" width="12" height="9.5"/>
-        <image name="openInBrowser" width="9.5" height="9.5"/>
-        <image name="star" width="9.5" height="9.5"/>
+        <image name="action" width="19" height="19"/>
+        <image name="fullArticle" width="32" height="32"/>
+        <image name="markAllRead" width="22" height="19"/>
+        <image name="markRead" width="19" height="19"/>
+        <image name="newFolder" width="19" height="19"/>
+        <image name="nextUnread" width="24" height="19"/>
+        <image name="openInBrowser" width="19" height="19"/>
+        <image name="star" width="19" height="19"/>
     </resources>
 </document>

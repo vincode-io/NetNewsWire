@@ -25,4 +25,10 @@ struct AppImages {
 	static var timelineStar: NSImage! = {
 		return NSImage(named: .timelineStar)
 	}()
+	
+	static var fullArticleDark: NSImage! = {
+		let path = Bundle.main.path(forResource: "Full Article Progress", ofType: "gif")
+		let image = NSImage(contentsOfFile: path!)
+		return image!
+	}()
 }

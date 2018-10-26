@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		516EB2C3215ED552005B31DB /* Full Article Progress.gif in Resources */ = {isa = PBXBuildFile; fileRef = 516EB2C2215ED551005B31DB /* Full Article Progress.gif */; };
 		519B8D332143397200FA689C /* SharingServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519B8D322143397200FA689C /* SharingServiceDelegate.swift */; };
 		51B8A0ED2154571500EEA621 /* VinXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51B8A0EA215456EA00EEA621 /* VinXML.framework */; };
 		51B8A0EE2154571500EEA621 /* VinXML.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 51B8A0EA215456EA00EEA621 /* VinXML.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -530,6 +531,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		516EB2C2215ED551005B31DB /* Full Article Progress.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Full Article Progress.gif"; path = "NetNewsWire/Resources/Full Article Progress.gif"; sourceTree = SOURCE_ROOT; };
 		518D3CE6214EE28600A076B6 /* VinContent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VinContent.xcodeproj; path = submodules/VinContent/VinContent.xcodeproj; sourceTree = "<group>"; };
 		519B8D322143397200FA689C /* SharingServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingServiceDelegate.swift; sourceTree = "<group>"; };
 		51B8A0D4215456E900EEA621 /* VinXML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VinXML.xcodeproj; path = submodules/VinXML/VinXML.xcodeproj; sourceTree = "<group>"; };
@@ -1161,6 +1163,7 @@
 		849A97991ED9EFB6007D329B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				516EB2C2215ED551005B31DB /* Full Article Progress.gif */,
 				D5D175012002039D0047B29D /* NetNewsWire.sdef */,
 				849C646C1ED37A5D003D8FC0 /* Info.plist */,
 				84EB380F1FBA8B9F000D2111 /* KeyboardShortcuts */,
@@ -1611,8 +1614,8 @@
 				ORGANIZATIONNAME = "Ranchero Software";
 				TargetAttributes = {
 					6581C73220CED60000F4AD34 = {
-						DevelopmentTeam = M8L2WTLA8W;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = SHJK2V3AJG;
+						ProvisioningStyle = Automatic;
 					};
 					840D617B2029031C009BC708 = {
 						CreatedOnToolsVersion = 9.3;
@@ -1633,12 +1636,12 @@
 					};
 					849C645F1ED37A5D003D8FC0 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = M8L2WTLA8W;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = SHJK2V3AJG;
+						ProvisioningStyle = Automatic;
 					};
 					849C64701ED37A5D003D8FC0 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 9C84TZ7Q6Z;
+						DevelopmentTeam = SHJK2V3AJG;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 849C645F1ED37A5D003D8FC0;
 					};
@@ -1716,7 +1719,7 @@
 /* Begin PBXReferenceProxy section */
 		518D3CF7214EE28600A076B6 /* VinContentTests.xctest */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
+			fileType = file;
 			path = VinContentTests.xctest;
 			remoteRef = 518D3CF6214EE28600A076B6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1951,6 +1954,7 @@
 				84A37CBB201ECE590087C5AF /* RenameSheet.xib in Resources */,
 				84BBB12D20142A4700F054F5 /* Inspector.storyboard in Resources */,
 				D5D1751220020B980047B29D /* NetNewsWire.sdef in Resources */,
+				516EB2C3215ED552005B31DB /* Full Article Progress.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

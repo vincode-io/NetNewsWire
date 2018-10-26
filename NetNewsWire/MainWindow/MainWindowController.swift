@@ -184,6 +184,10 @@ class MainWindowController : NSWindowController, NSUserInterfaceValidations {
 			return validateToggleStarred(item)
 		}
 
+		if item.action == #selector(toggleFullArticle(_:)) {
+			return true
+		}
+		
 		if item.action == #selector(markOlderArticlesAsRead(_:)) {
 			return canMarkOlderArticlesAsRead()
 		}
