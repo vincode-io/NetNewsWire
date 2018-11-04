@@ -16,3 +16,9 @@
 [submodule "submodules/RSDatabase"]
 	path = submodules/RSDatabase
 	url = https://github.com/brentsimmons/RSDatabase
+[submodule "VinXML"]
+	path = VinXML
+	url = https://github.com/vincode-io/VinXML.git
+[submodule "VinContent"]
+	path = VinContent
+	url = https://github.com/vincode-io/VinContent.git
