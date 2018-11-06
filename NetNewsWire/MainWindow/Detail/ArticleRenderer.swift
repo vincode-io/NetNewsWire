@@ -19,6 +19,7 @@ var cachedTemplate = ""
 class ArticleRenderer {
 
 	let article: Article?
+	let articleBodyOverride: String?
 	let articleStyle: ArticleStyle
 	let appearance: NSAppearance?
 	
@@ -99,10 +100,11 @@ class ArticleRenderer {
 		return renderHTML(withBody: body)
 	}
 	
-	init(article: Article?, style: ArticleStyle, appearance: NSAppearance? = nil) {
+	init(article: Article?, style: ArticleStyle, appearance: NSAppearance? = nil, articleBodyOverride: String? = nil) {
 		self.article = article
 		self.articleStyle = style
 		self.appearance = appearance
+		self.articleBodyOverride = articleBodyOverride
 	}
 
 	// MARK: Private
@@ -184,7 +186,7 @@ class ArticleRenderer {
 		d["title"] = title
 
 		let body = article.body == nil ? "" : article.body
-		d["body"] = body
+		d["body"] = articleBodyOverride == nil ? body : articleBodyOverride
 
 		d["avatars"] = ""
 		var didAddAvatar = false

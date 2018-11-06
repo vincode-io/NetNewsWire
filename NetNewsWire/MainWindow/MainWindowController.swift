@@ -10,11 +10,15 @@ import AppKit
 import Articles
 import Account
 import RSCore
+import VinContent
 
 class MainWindowController : NSWindowController, NSUserInterfaceValidations {
 
 	@IBOutlet var toolbarDelegate: MainWindowToolbarDelegate?
-	private var sharingServicePickerDelegate: NSSharingServicePickerDelegate?
+    @IBOutlet weak var fullArticleButton: FullArticleButton!
+	
+	private var contentExtractor: ContentExtractor? = nil
+    private var sharingServicePickerDelegate: NSSharingServicePickerDelegate?
 
 	private let windowAutosaveName = NSWindow.FrameAutosaveName(rawValue: "MainWindow")
 	static var didPositionWindowOnFirstRun = false
@@ -65,6 +69,8 @@ class MainWindowController : NSWindowController, NSUserInterfaceValidations {
 		NotificationCenter.default.addObserver(self, selector: #selector(refreshProgressDidChange(_:)), name: .AccountRefreshProgressDidChange, object: nil)
 
 		NotificationCenter.default.addObserver(self, selector: #selector(sidebarSelectionDidChange(_:)), name: .SidebarSelectionDidChange, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(timelineSelectionDidChange(_:)), name: .TimelineSelectionDidChange, object: nil)
+
 		NotificationCenter.default.addObserver(self, selector: #selector(unreadCountDidChange(_:)), name: .UnreadCountDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(displayNameDidChange(_:)), name: .DisplayNameDidChange, object: nil)
 
@@ -116,6 +122,13 @@ class MainWindowController : NSWindowController, NSUserInterfaceValidations {
 		
 		currentFeedOrFolder = selectedObjects?[0]
 		
+	}
+	
+	@objc func timelineSelectionDidChange(_ note: Notification) {
+		fullArticleButton.isError = false
+		fullArticleButton.isInProgress = false
+		fullArticleButton.state = .off
+		contentExtractor = nil
 	}
 	
 	@objc func unreadCountDidChange(_ note: Notification) {
@@ -188,6 +201,10 @@ class MainWindowController : NSWindowController, NSUserInterfaceValidations {
 			return canMarkOlderArticlesAsRead()
 		}
 
+		if item.action == #selector(toggleFullArticle(_:)) {
+			return validateToggleFullArticle(item)
+		}
+		
 		if item.action == #selector(toolbarShowShareMenu(_:)) {
 			return canShowShareMenu()
 		}
@@ -285,6 +302,30 @@ class MainWindowController : NSWindowController, NSUserInterfaceValidations {
 		timelineViewController?.toggleStarredStatusForSelectedArticles()
 	}
 
+	@IBAction func toggleFullArticle(_ sender: Any?) {
+		
+		guard let currentLink = currentLink, let currentLinkURL = URL(string: currentLink) else {
+			return
+		}
+		
+		guard fullArticleButton.state == .on else {
+			detailViewController?.reloadHTML()
+			return
+		}
+		
+		if let contentExtractor = contentExtractor, let extractedArticle = contentExtractor.article {
+			if currentLinkURL == extractedArticle.source {
+				detailViewController?.reloadHTML(withBodyOverride: extractedArticle.wrappedContent)
+			}
+		} else {
+			contentExtractor = ContentExtractor(currentLinkURL)
+			contentExtractor!.delegate = self
+			contentExtractor!.process()
+			makeToolbarValidate()
+		}
+		
+	}
+	
 	@IBAction func markAllAsReadAndGoToNextUnread(_ sender: Any?) {
 
 		markAllAsRead(sender)
@@ -393,6 +434,23 @@ extension MainWindowController : ScriptingMainWindowController {
     }
 }
 
+// MARK: - ContentExtractorDelegate
+
+extension MainWindowController: ContentExtractorDelegate {
+	
+	func contentExtractionDidFail(with: Error) {
+		makeToolbarValidate()
+	}
+	
+	func contentExtractionDidComplete(article: ExtractedArticle) {
+		makeToolbarValidate()
+		if fullArticleButton.state == .on {
+			detailViewController?.reloadHTML(withBodyOverride: article.wrappedContent)
+		}
+	}
+	
+}
+
 // MARK: - Private
 
 private extension MainWindowController {
@@ -486,6 +544,40 @@ private extension MainWindowController {
 		return result
 	}
 
+	func validateToggleFullArticle(_ item: NSValidatedUserInterfaceItem) -> Bool {
+		
+		guard let contentExtractionState = contentExtractor?.state else {
+			fullArticleButton.isError = false
+			fullArticleButton.isInProgress = false
+			return currentLink != nil
+		}
+		
+		switch contentExtractionState {
+		case .unableToParse:
+			fullArticleButton.isError = false
+			fullArticleButton.isInProgress = false
+			return false
+		case .ready:
+			fullArticleButton.isError = false
+			fullArticleButton.isInProgress = false
+			return currentLink != nil
+		case .processing:
+			fullArticleButton.isError = false
+			fullArticleButton.isInProgress = true
+			return true
+		case .failedToParse:
+			fullArticleButton.isError = true
+			fullArticleButton.isInProgress = false
+			fullArticleButton.state = .off
+			return true
+		case .complete:
+			fullArticleButton.isError = false
+			fullArticleButton.isInProgress = false
+			return currentLink != nil
+		}
+
+	}
+	
 	func canMarkOlderArticlesAsRead() -> Bool {
 
 		return timelineViewController?.canMarkOlderArticlesAsRead() ?? false

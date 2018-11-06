@@ -77,6 +77,24 @@ final class DetailViewController: NSViewController, WKUIDelegate {
 
 	}
 
+	func reloadHTML(withBodyOverride bodyOverride: String? = nil) {
+		
+		let articleRenderer = ArticleRenderer(article: article,
+											  style: ArticleStylesManager.shared.currentStyle,
+											  appearance: self.view.effectiveAppearance,
+											  articleBodyOverride: bodyOverride)
+		
+		if article != nil {
+			webview.loadHTMLString(articleRenderer.articleHTML, baseURL: articleRenderer.baseURL)
+		}
+		else if articles != nil {
+			webview.loadHTMLString(articleRenderer.multipleSelectionHTML, baseURL: nil)
+		}
+		else {
+			webview.loadHTMLString(articleRenderer.noSelectionHTML, baseURL: nil)
+		}
+	}
+	
 	// MARK: - Scrolling
 
 	func canScrollDown(_ callback: @escaping (Bool) -> Void) {
@@ -185,24 +203,7 @@ extension DetailViewController: WKScriptMessageHandler {
 // MARK: - Private
 
 private extension DetailViewController {
-
-	func reloadHTML() {
-
-		let articleRenderer = ArticleRenderer(article: article,
-											  style: ArticleStylesManager.shared.currentStyle,
-											  appearance: self.view.effectiveAppearance)
-		
-		if article != nil {
-			webview.loadHTMLString(articleRenderer.articleHTML, baseURL: articleRenderer.baseURL)
-		}
-		else if articles != nil {
-			webview.loadHTMLString(articleRenderer.multipleSelectionHTML, baseURL: nil)
-		}
-		else {
-			webview.loadHTMLString(articleRenderer.noSelectionHTML, baseURL: nil)
-		}
-	}
-
+	
 	func fetchScrollInfo(_ callback: @escaping (ScrollInfo?) -> Void) {
 
 		let javascriptString = "var x = {contentHeight: document.body.scrollHeight, offsetY: document.body.scrollTop}; x"
