@@ -288,6 +288,10 @@
 		5193CD5A245E44A90092735E /* RedditFeedProvider-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5193CD57245E44A90092735E /* RedditFeedProvider-Extensions.swift */; };
 		5195C1DA2720205F00888867 /* ShadowTableChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5195C1D92720205F00888867 /* ShadowTableChanges.swift */; };
 		5195C1DC2720BD3000888867 /* MasterFeedRowIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5195C1DB2720BD3000888867 /* MasterFeedRowIdentifier.swift */; };
+		51977AAC2DFA33F90076B7D2 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 51977AAB2DFA33F90076B7D2 /* AppIcon.icon */; };
+		51977AAD2DFA33F90076B7D2 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 51977AAB2DFA33F90076B7D2 /* AppIcon.icon */; };
+		51977AAE2DFA33F90076B7D2 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 51977AAB2DFA33F90076B7D2 /* AppIcon.icon */; };
+		51977AAF2DFA34A60076B7D2 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 51977AAB2DFA33F90076B7D2 /* AppIcon.icon */; };
 		519B8D332143397200FA689C /* SharingServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519B8D322143397200FA689C /* SharingServiceDelegate.swift */; };
 		519CA8E525841DB700EB079A /* CrashReporter in Frameworks */ = {isa = PBXBuildFile; productRef = 519CA8E425841DB700EB079A /* CrashReporter */; };
 		519E743D22C663F900A78E47 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 519E743422C663F900A78E47 /* SceneDelegate.swift */; };
@@ -1293,6 +1297,7 @@
 		5193CD57245E44A90092735E /* RedditFeedProvider-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RedditFeedProvider-Extensions.swift"; sourceTree = "<group>"; };
 		5195C1D92720205F00888867 /* ShadowTableChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowTableChanges.swift; sourceTree = "<group>"; };
 		5195C1DB2720BD3000888867 /* MasterFeedRowIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterFeedRowIdentifier.swift; sourceTree = "<group>"; };
+		51977AAB2DFA33F90076B7D2 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		519B8D322143397200FA689C /* SharingServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingServiceDelegate.swift; sourceTree = "<group>"; };
 		519E743422C663F900A78E47 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		519ED455244828C3007F8E94 /* AddExtensionPointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExtensionPointViewController.swift; sourceTree = "<group>"; };
@@ -1868,6 +1873,7 @@
 				844B5B641FEA11F200C7C76A /* GlobalKeyboardShortcuts.plist */,
 				844B5B681FEA20DF00C7C76A /* SidebarKeyboardShortcuts.plist */,
 				845479871FEB77C000AD8B59 /* TimelineKeyboardShortcuts.plist */,
+				51977AAB2DFA33F90076B7D2 /* AppIcon.icon */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3335,6 +3341,7 @@
 				51A9A5E42380C8880033AADF /* ShareFolderPickerAccountCell.xib in Resources */,
 				513C5CEC232571C2003D4054 /* MainInterface.storyboard in Resources */,
 				51A9A5EE2380D6080033AADF /* Assets.xcassets in Resources */,
+				51977AAF2DFA34A60076B7D2 /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3398,6 +3405,7 @@
 				65ED4064235DEF6C0081F399 /* AddFolderSheet.xib in Resources */,
 				65ED4065235DEF6C0081F399 /* AccountsFeedbin.xib in Resources */,
 				65ED4066235DEF6C0081F399 /* TimelineTableView.xib in Resources */,
+				51977AAC2DFA33F90076B7D2 /* AppIcon.icon in Resources */,
 				65ED4067235DEF6C0081F399 /* page.html in Resources */,
 				65ED4068235DEF6C0081F399 /* MainWindow.storyboard in Resources */,
 				BDCB516824282C8A00102A80 /* AccountsNewsBlur.xib in Resources */,
@@ -3463,6 +3471,7 @@
 				5177C21327B07CFE00643901 /* NewsFax.nnwtheme in Resources */,
 				84C9FC9D2262A1A900D921D6 /* Assets.xcassets in Resources */,
 				514219582353C28900E07E2C /* main_ios.js in Resources */,
+				51977AAD2DFA33F90076B7D2 /* AppIcon.icon in Resources */,
 				DFCE4F9528EF278300405869 /* Thanks.md in Resources */,
 				51DEE81426FB9233006DAA56 /* Appanoose.nnwtheme in Resources */,
 				51E36E8C239D6765006F47A5 /* AddFeedSelectFolderTableViewCell.xib in Resources */,
@@ -3511,6 +3520,7 @@
 				55E15BCB229D65A900D6602A /* AccountsReaderAPI.xib in Resources */,
 				49F40DF82335B71000552BF4 /* newsfoot.js in Resources */,
 				51333D3B2468615D00EB5C91 /* AddRedditFeedSheet.xib in Resources */,
+				51977AAE2DFA33F90076B7D2 /* AppIcon.icon in Resources */,
 				BDCB516724282C8A00102A80 /* AccountsNewsBlur.xib in Resources */,
 				5103A9982421643300410853 /* blank.html in Resources */,
 				B20180AB28E3B76F0059686A /* Localizable.stringsdict in Resources */,
