@@ -50,22 +50,11 @@ class MasterFeedViewController: UITableViewController, UndoableCommandRunner, Ma
 	override func viewDidLoad() {
 
 		super.viewDidLoad()
-
-		if traitCollection.userInterfaceIdiom == .phone {
-			navigationController?.navigationBar.prefersLargeTitles = true
-		}
-		
-		// If you don't have an empty table header, UIKit tries to help out by putting one in for you
-		// that makes a gap between the first section header and the navigation bar
-		var frame = CGRect.zero
-		frame.size.height = .leastNormalMagnitude
-		tableView.tableHeaderView = UIView(frame: frame)
 		
 		tableView.register(MasterFeedTableViewSectionHeader.self, forHeaderFooterViewReuseIdentifier: "SectionHeader")
 		tableView.dragDelegate = self
 		tableView.dropDelegate = self
 		tableView.dragInteractionEnabled = true
-		resetEstimatedRowHeight()
 		tableView.separatorStyle = .none
 
 		NotificationCenter.default.addObserver(self, selector: #selector(unreadCountDidChange(_:)), name: .UnreadCountDidChange, object: nil)
@@ -77,6 +66,19 @@ class MasterFeedViewController: UITableViewController, UndoableCommandRunner, Ma
 		NotificationCenter.default.addObserver(self, selector: #selector(configureContextMenu(_:)), name: .ActiveExtensionPointsDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(displayNameDidChange(_:)), name: .DisplayNameDidChange, object: nil)
 
+		becomeFirstResponder()
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		navigationController?.isToolbarHidden = false		
+
+		if traitCollection.userInterfaceIdiom == .phone {
+			navigationController?.navigationBar.prefersLargeTitles = true
+		}
+
+		resetEstimatedRowHeight()
+		updateUI()
+
 		refreshControl = UIRefreshControl()
 		refreshControl!.addTarget(self, action: #selector(refreshAccounts(_:)), for: .valueChanged)
 		refreshControl!.tintColor = .clear
@@ -86,12 +88,6 @@ class MasterFeedViewController: UITableViewController, UndoableCommandRunner, Ma
 		let refreshProgressItemButton = UIBarButtonItem(customView: progressBarViewController.view)
 		toolbarItems?.insert(refreshProgressItemButton, at: 2)
 		
-		becomeFirstResponder()
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		navigationController?.isToolbarHidden = false		
-		updateUI()
 		super.viewWillAppear(animated)
 	}
 	
