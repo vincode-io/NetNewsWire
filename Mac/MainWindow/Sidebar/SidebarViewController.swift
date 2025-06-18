@@ -310,7 +310,7 @@ protocol SidebarDelegate: AnyObject {
 			return
 		}
 		
-		NSCursor.setHiddenUntilMouseMoves(true)
+//		NSCursor.setHiddenUntilMouseMoves(true)
 		outlineView.selectRowIndexes(IndexSet([row]), byExtendingSelection: false)
 		outlineView.scrollTo(row: row)
 	}

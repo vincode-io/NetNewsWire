@@ -312,7 +312,7 @@ enum TimelineSourceMode {
 			return
 		}
 		detailViewController.canScrollDown { (canScroll) in
-			NSCursor.setHiddenUntilMouseMoves(true)
+//			NSCursor.setHiddenUntilMouseMoves(true)
 			canScroll ? detailViewController.scrollPageDown(sender) : self.nextUnread(sender)
 		}
 	}
@@ -323,7 +323,7 @@ enum TimelineSourceMode {
 		}
 		detailViewController.canScrollUp { (canScroll) in
 			if (canScroll) {
-				NSCursor.setHiddenUntilMouseMoves(true)
+//				NSCursor.setHiddenUntilMouseMoves(true)
 				detailViewController.scrollPageUp(sender)
 			}
 		}
@@ -374,7 +374,7 @@ enum TimelineSourceMode {
 			return
 		}
 
-		NSCursor.setHiddenUntilMouseMoves(true)
+//		NSCursor.setHiddenUntilMouseMoves(true)
 
 		// TODO: handle search mode
 		if timelineViewController.canGoToNextUnread(wrappingToTop: false) {

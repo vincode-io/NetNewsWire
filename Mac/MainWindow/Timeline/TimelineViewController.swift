@@ -606,7 +606,7 @@ final class TimelineViewController: NSViewController, UndoableCommandRunner, Unr
 
 		guard let ix = articles.firstIndex(where: { $0.articleID == articleID }) else {	return }
 		
-		NSCursor.setHiddenUntilMouseMoves(true)
+//		NSCursor.setHiddenUntilMouseMoves(true)
 		tableView.selectRow(ix)
 		tableView.scrollTo(row: ix)
 	}
@@ -615,7 +615,7 @@ final class TimelineViewController: NSViewController, UndoableCommandRunner, Unr
 		guard let ix = indexOfNextUnreadArticle() else {
 			return
 		}
-		NSCursor.setHiddenUntilMouseMoves(true)
+//		NSCursor.setHiddenUntilMouseMoves(true)
 		tableView.selectRow(ix)
 		tableView.scrollTo(row: ix)
 	}
