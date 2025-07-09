@@ -27,7 +27,7 @@ import UIKit
 		let cornerRadii = CGSize(width: cornerRadius, height: cornerRadius)
 		let rect = CGRect(x: 1, y: 1, width: contentSize.width - 2, height: contentSize.height - 2)
 		let path = UIBezierPath(roundedRect: rect, byRoundingCorners: .allCorners, cornerRadii: cornerRadii)
-		AppAssets.primaryAccentColor.setFill()
+		UIColor.label.setFill()
 		path.fill()
 
 		if unreadCount > 0 {
