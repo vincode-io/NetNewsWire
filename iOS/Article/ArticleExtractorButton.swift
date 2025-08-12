@@ -72,8 +72,8 @@ enum ArticleExtractorButtonState {
 	}
 	
 	private func addAnimatedSublayer(to hostedLayer: CALayer) {
-		let image1 = AppAssets.articleExtractorOffTinted.cgImage!
-		let image2 = AppAssets.articleExtractorOnTinted.cgImage!
+		let image1 = AppAssets.articleExtractorOff.tinted(color: .label)!.cgImage!
+		let image2 = AppAssets.articleExtractorOn.tinted(color: .label)!.cgImage!
 		let images = [image1, image2, image1]
 		
 		animatedLayer = CALayer()
