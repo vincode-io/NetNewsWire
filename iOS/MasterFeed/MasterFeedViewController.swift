@@ -70,6 +70,8 @@ class MasterFeedViewController: UITableViewController, UndoableCommandRunner, Ma
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
+		coordinator.configureNavigationController(navigationController)
+
 		navigationController?.isToolbarHidden = false		
 
 		if traitCollection.userInterfaceIdiom == .phone {

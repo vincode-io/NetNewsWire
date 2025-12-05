@@ -169,7 +169,10 @@ class ArticleViewController: UIViewController, MainControllerIdentifiable, Loggi
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
+		coordinator.configureNavigationController(navigationController)
+
 		navigationController?.isToolbarHidden = false
+
 		if AppDefaults.shared.articleFullscreenEnabled {
 			currentWebViewController?.hideBars()
 		}

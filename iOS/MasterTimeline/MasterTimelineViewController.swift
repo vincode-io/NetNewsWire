@@ -129,6 +129,8 @@ class MasterTimelineViewController: UITableViewController, UndoableCommandRunner
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
+		coordinator.configureNavigationController(navigationController)
+		
 		navigationController?.isToolbarHidden = false
 
 		// If the nav bar is hidden, fade it in to avoid it showing stuff as it is getting laid out
