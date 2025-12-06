@@ -1330,28 +1330,6 @@ final class SceneCoordinator: NSObject, UndoableCommandRunner, Logging {
 		guard let navController else { return }
 		
 		navController.delegate = self
-		
-		let scrollEdge = UINavigationBarAppearance()
-		scrollEdge.configureWithOpaqueBackground()
-		scrollEdge.shadowColor = nil
-		scrollEdge.shadowImage = UIImage()
-		
-		let standard = UINavigationBarAppearance()
-		standard.shadowColor = .opaqueSeparator
-		standard.shadowImage = UIImage()
-		
-		navController.navigationBar.standardAppearance = standard
-		navController.navigationBar.compactAppearance = standard
-		navController.navigationBar.scrollEdgeAppearance = scrollEdge
-		navController.navigationBar.compactScrollEdgeAppearance = scrollEdge
-		
-		navController.navigationBar.tintColor = AppAssets.primaryAccentColor
-		
-		let toolbarAppearance = UIToolbarAppearance()
-		navController.toolbar.standardAppearance = toolbarAppearance
-		navController.toolbar.compactAppearance = toolbarAppearance
-		navController.toolbar.scrollEdgeAppearance = toolbarAppearance
-		navController.toolbar.tintColor = AppAssets.primaryAccentColor
 	}
 
 }

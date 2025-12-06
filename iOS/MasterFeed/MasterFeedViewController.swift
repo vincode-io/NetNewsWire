@@ -74,10 +74,6 @@ class MasterFeedViewController: UITableViewController, UndoableCommandRunner, Ma
 
 		navigationController?.isToolbarHidden = false		
 
-		if traitCollection.userInterfaceIdiom == .phone {
-			navigationController?.navigationBar.prefersLargeTitles = true
-		}
-
 		resetEstimatedRowHeight()
 		updateUI()
 
