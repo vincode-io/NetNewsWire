@@ -134,13 +134,6 @@ protocol MasterFeedTableViewCellDelegate: AnyObject {
 		}
 	}
 	
-	override func updateConfiguration(using state: UICellConfigurationState) {
-		backgroundConfiguration = UIBackgroundConfiguration.listSidebarCell().updated(for: state)
-		if state.isSelected {
-			backgroundConfiguration?.backgroundColor = AppAssets.secondaryAccentColor
-		}
-	}
-
 	override func willTransition(to state: UITableViewCell.StateMask) {
 		super.willTransition(to: state)
 		isShowingEditControl = state.contains(.showingEditControl)
