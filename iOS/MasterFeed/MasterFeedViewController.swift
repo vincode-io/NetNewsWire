@@ -26,6 +26,7 @@ class MasterFeedViewController: UITableViewController, UndoableCommandRunner, Ma
 
 	let refreshProgressModel = RefreshProgressModel()
 	lazy var progressBarViewController = UIHostingController(rootView: RefreshProgressView(progressBarMode: refreshProgressModel))
+	lazy var refreshProgressItemButton = UIBarButtonItem(customView: progressBarViewController.view)
 	
 	var mainControllerIdentifier = MainControllerIdentifier.masterFeed
 	
@@ -57,6 +58,10 @@ class MasterFeedViewController: UITableViewController, UndoableCommandRunner, Ma
 		tableView.dragInteractionEnabled = true
 		tableView.separatorStyle = .none
 
+		progressBarViewController.view.backgroundColor = .clear
+		progressBarViewController.view.translatesAutoresizingMaskIntoConstraints = false
+		toolbarItems?.insert(refreshProgressItemButton, at: 2)
+
 		NotificationCenter.default.addObserver(self, selector: #selector(unreadCountDidChange(_:)), name: .UnreadCountDidChange, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(faviconDidBecomeAvailable(_:)), name: .FaviconDidBecomeAvailable, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(webFeedIconDidBecomeAvailable(_:)), name: .WebFeedIconDidBecomeAvailable, object: nil)
@@ -81,11 +86,6 @@ class MasterFeedViewController: UITableViewController, UndoableCommandRunner, Ma
 		refreshControl!.addTarget(self, action: #selector(refreshAccounts(_:)), for: .valueChanged)
 		refreshControl!.tintColor = .clear
 
-		progressBarViewController.view.backgroundColor = .clear
-		progressBarViewController.view.translatesAutoresizingMaskIntoConstraints = false
-		let refreshProgressItemButton = UIBarButtonItem(customView: progressBarViewController.view)
-		toolbarItems?.insert(refreshProgressItemButton, at: 2)
-		
 		super.viewWillAppear(animated)
 	}
 	
