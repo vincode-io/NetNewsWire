@@ -106,8 +106,9 @@ class ArticleViewController: UIViewController, MainControllerIdentifiable, Loggi
 		NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(reloadDueToThemeChange(_:)), name: .CurrentArticleThemeDidChangeNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(configureAppearanceMenu(_:)), name: .ArticleThemeNamesDidChangeNotification, object: nil)
-		
-		articleExtractorButton.addTarget(self, action: #selector(toggleArticleExtractor(_:)), for: .touchUpInside)
+
+		// A gesture recognizer here seems to work better than configuring the button action on iOS 26, but doesn't completely fix the problem
+		articleExtractorButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggleArticleExtractor(_:))))
 		toolbarItems?.insert(UIBarButtonItem(customView: articleExtractorButton), at: 6)
 		
 		if let parentNavController = navigationController?.parent as? UINavigationController {
